@@ -3,14 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.yong.WatchMapper">
+<mapper namespace="com.lgcns.dailyMapper">
      
-    <select id="TEST" resultType="LinkedHashMap" parameterType="map">
-    	<![CDATA[
-			select  *
-			from	sales_order a
-			where	increment_id = 38000001664
-		]]>
-     </select>
+    <select id="COUNTRY" resultType="LinkedHashMap" parameterType="ArrayList">
+		select a.*
+		from test a
+		where 1=1
+			  and
+			  a.code in <foreach collection="list" item="item"  open="(" close=")" separator=",">
+            				#{item}
+        	  			</foreach>			  	
+    </select>
+         
+    <select id="SENDGERP" resultType="LinkedHashMap" parameterType="map">
+    <![CDATA[
+        select	a.*  	
+		from 	test a
+		where 	1=1
+	]]>
+    </select>
     
 </mapper>

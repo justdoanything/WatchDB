@@ -1,5 +1,5 @@
 package com.yong.Watch;
 
-public class WatchService {
+public class WachDAO {
 
 }
