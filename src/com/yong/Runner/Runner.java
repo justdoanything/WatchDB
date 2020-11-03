@@ -16,6 +16,7 @@ public class Runner {
 		Watcher watcher = new Watcher();
 		watcher.execute();
 		
+		
 		logger.info("[ Watch DB End ]");
 	}
 

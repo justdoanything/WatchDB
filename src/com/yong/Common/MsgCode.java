@@ -11,6 +11,7 @@ public class MsgCode {
 	public static final String CONF_SSH_TUNNEL_PORT_START = "SSH.TUNNEL_START_PORT";
 	public static final String CONF_SSH_SQL_HOST = "SSH.SQL_HOST";
 	public static final String CONF_SSH_SQL_PORT = "SSH.SQL_PORT";
+	
 }
 
 //[Configuration]

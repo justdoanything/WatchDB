@@ -18,7 +18,7 @@ public class Configuration {
 			logger.debug("LOAD Properties File : " + args[0]);
 			FileInputStream fis = new FileInputStream(args[0]);
 			properties.load(fis);
-
+			
 			//set Log4j properties 
 			logger.debug("LOAD Log4j Properties file : " + Configuration.getString(MsgCode.CONF_PATH_LOG4J));
 			PropertyConfigurator.configure(Configuration.getString(MsgCode.CONF_PATH_LOG4J));

@@ -21,6 +21,7 @@ public class MySqlConnector {
 			//set mybatis configuration
 			File file = new File(Configuration.getString(MsgCode.CONF_PATH_MYBATIS));
 			logger.debug("LOAD myBatis Properties file : " + Configuration.getString(MsgCode.CONF_PATH_MYBATIS));
+			
 			InputStream iss = new FileInputStream(file);
 			ssf = new SqlSessionFactoryBuilder().build(iss);
 			logger.debug("SqlSessionFactory build Success");

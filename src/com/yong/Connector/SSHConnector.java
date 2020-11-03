@@ -31,6 +31,7 @@ public class SSHConnector {
 									  Configuration.getInt(MsgCode.CONF_SSH_PORT));
 
 			jsch.addIdentity(Configuration.getString(MsgCode.CONF_SSH_KEY_PATH));
+			
 			Properties config = new Properties();
 			config.put("StrictHostKeyChecking", "no");
 			config.put("ConnectionAttempts", "3");

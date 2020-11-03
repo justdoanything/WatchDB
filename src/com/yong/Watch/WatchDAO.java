@@ -38,7 +38,6 @@ public class WatchDAO {
 	public ArrayList<LinkedHashMap> Test() {
 		ArrayList<LinkedHashMap> result = 
 				(ArrayList<LinkedHashMap>) mysql.selectList(namespace + "TEST", param);
-		
 		return result;
 	}  
 }
