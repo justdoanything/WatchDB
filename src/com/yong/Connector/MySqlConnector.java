@@ -19,17 +19,18 @@ public class MySqlConnector {
 	public MySqlConnector() {
 		try {
 			//set mybatis configuration
-			File file = new File(Configuration.getString(MsgCode.CONF_PATH_MYBATIS));
-			logger.debug("LOAD myBatis Properties file : " + Configuration.getString(MsgCode.CONF_PATH_MYBATIS));
+			String MYBATIS_CONFIG_FILE_PATH = Configuration.getString(MsgCode.CONF_PATH_MYBATIS); 
+			File file = new File(MYBATIS_CONFIG_FILE_PATH);
+			logger.debug("[Success] Load myBatis Properties file ¡æ " + MYBATIS_CONFIG_FILE_PATH);
 			
 			InputStream iss = new FileInputStream(file);
 			ssf = new SqlSessionFactoryBuilder().build(iss);
 			logger.debug("SqlSessionFactory build Success");
-			logger.info("DB Connect Success!");
+			logger.info("[Success] Mysql Connect Success!");
 		}catch (Exception e) {
 			e.printStackTrace();
 			logger.error("SqlSessionFactory build Fail" + e.getMessage());
-			logger.info("DB Connect Fail!");
+			logger.info("[Exception] Mysql Connect Fail!");
 		}
 	}
 	

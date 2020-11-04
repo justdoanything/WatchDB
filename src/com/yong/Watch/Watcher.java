@@ -11,9 +11,13 @@ public class Watcher {
 	
 	public void execute() {
 		WatchService watchSvc = new WatchService();
+		try {
+			logger.debug("test Service Start");
+			watchSvc.test();
+		}catch (Exception e) {
 		
-		watchSvc.test();
-		
-		watchSvc.finalize();
+		}finally {
+			watchSvc.finalize();
+		}
 	}
 }

@@ -20,7 +20,8 @@ public class SSHConnector {
 
 		try {
 			int SSH_TUNNEL_PORT = Configuration.getInt(MsgCode.CONF_SSH_TUNNEL_PORT_START);
-			while (checkPort(SSH_TUNNEL_PORT)) {
+			logger.debug("Tunnel port starting to find : " + SSH_TUNNEL_PORT);
+			while (this.checkPort(SSH_TUNNEL_PORT)) {
 				SSH_TUNNEL_PORT++;
 			}
 
@@ -38,14 +39,14 @@ public class SSHConnector {
 			session.setConfig(config);
 			session.connect();
 
-			logger.info("SSH Connect Success!");
+			logger.info("[Success] SSH Session Connect !");
 
 			session.setPortForwardingL(SSH_TUNNEL_PORT, Configuration.getString(MsgCode.CONF_SSH_SQL_HOST),
 					SSH_SQL_PORT);
 			logger.info("Port Forward : " + SSH_TUNNEL_PORT + " ¡æ " + SSH_SQL_PORT);
 
 		} catch (Exception e) {
-			logger.info("SSH Connect Fail!");
+			logger.info("[Exception] SSH Session Connect");
 			e.printStackTrace();
 		} finally {
 

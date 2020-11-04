@@ -8,16 +8,14 @@ public class Runner {
 
 	private static Logger logger = Logger.getLogger(Runner.class);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
-		logger.info("[ Watch DB Start ]");
 		Configuration.initialize(args);
 		
 		Watcher watcher = new Watcher();
 		watcher.execute();
 		
-		
-		logger.info("[ Watch DB End ]");
+		logger.info("[ Watch App End ]");
 	}
 
 }

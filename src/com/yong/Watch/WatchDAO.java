@@ -17,10 +17,9 @@ public class WatchDAO {
 	private HashMap<String, String> param;
 	
 	public WatchDAO() {
-		// Set SqlSession
+		// Build SqlSession
 		mysql = new MySqlConnector();
 		logger.debug("Sql Namespace : " + this.namespace);
-		logger.debug("Mysql Connect Success!");
 		
 		param = new HashMap<String, String>();
 	}

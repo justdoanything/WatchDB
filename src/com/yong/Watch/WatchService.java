@@ -24,7 +24,6 @@ public class WatchService {
 	}
 	
 	public void test() {
-		logger.debug("Start test");
 		ArrayList<LinkedHashMap> result = dao.Test();
 		logger.info("Test Result >> \n" + result.toString());
 	}
