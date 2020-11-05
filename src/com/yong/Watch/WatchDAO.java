@@ -16,7 +16,7 @@ public class WatchDAO {
 	private String namespace = "com.yong.WatchMapper.";
 	private HashMap<String, String> param;
 	
-	public WatchDAO() {
+	public WatchDAO() throws Exception {
 		// Build SqlSession
 		mysql = new MySqlConnector();
 		logger.debug("Sql Namespace : " + this.namespace);
@@ -34,7 +34,7 @@ public class WatchDAO {
 		this.param.put(key, value);
 	}
 	
-	public ArrayList<LinkedHashMap> Test() {
+	public ArrayList<LinkedHashMap> Test() throws Exception {
 		ArrayList<LinkedHashMap> result = 
 				(ArrayList<LinkedHashMap>) mysql.selectList(namespace + "TEST", param);
 		return result;

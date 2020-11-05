@@ -10,10 +10,14 @@ public class Runner {
 	
 	public static void main(String[] args) throws InterruptedException {
 		
-		Configuration.initialize(args);
-		
-		Watcher watcher = new Watcher();
-		watcher.execute();
+		try{
+			Configuration.initialize(args);
+			
+			Watcher watcher = new Watcher();
+			watcher.execute();
+		}catch (Exception e) {
+			logger.error("Exception : ", e);
+		}
 		
 		logger.info("[ Watch App End ]");
 	}

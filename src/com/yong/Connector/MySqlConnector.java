@@ -16,7 +16,7 @@ public class MySqlConnector {
 	Logger logger = Logger.getLogger(this.getClass());
 	private SqlSessionFactory ssf;
 
-	public MySqlConnector() {
+	public MySqlConnector() throws Exception {
 		try {
 			//set mybatis configuration
 			String MYBATIS_CONFIG_FILE_PATH = Configuration.getString(MsgCode.CONF_PATH_MYBATIS); 
@@ -28,34 +28,33 @@ public class MySqlConnector {
 			logger.debug("SqlSessionFactory build Success");
 			logger.info("[Success] Mysql Connect Success!");
 		}catch (Exception e) {
-			e.printStackTrace();
-			logger.error("SqlSessionFactory build Fail" + e.getMessage());
 			logger.info("[Exception] Mysql Connect Fail!");
+			throw new Exception(e);
 		}
 	}
 	
-	public SqlSession getSession() {
+	public SqlSession getSession() throws Exception {
 		SqlSession session = null;
 		try {
 			session = ssf.openSession();
 			session.getConnection();
 			logger.debug("Session Open");
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.error("FAIL Session Open" + e.getMessage());
+			throw new Exception(e);
 		}
 		return session;
 	}
 	
-	public SqlSession getSession(boolean autoCommit) {
+	public SqlSession getSession(boolean autoCommit) throws Exception {
 		SqlSession session = null;
 		try {
 			session = ssf.openSession(autoCommit);
 			session.getConnection();
 			logger.debug("Session Open");
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.error("FAIL Session Open" + e.getMessage());
+			throw new Exception(e);
 		}
 		return session;
 	}
@@ -74,31 +73,32 @@ public class MySqlConnector {
 		}
 	}
 	
-	public Object selectList(String id, Object param) {
-		SqlSession session = getSession();
+	public Object selectList(String id, Object param) throws Exception {
+		SqlSession session = null;
 		Object reslut = null;
-		
 		try {
+			session = getSession();
 			reslut = session.selectList(id, param);
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.error("FAIL SelectList" + e.getMessage());
+			throw new Exception(e);
 		}finally {
 			close(session);
 		}
 		return reslut;
 	}
 	
-	public Object selectOne(String id, Object param) {
-		SqlSession session = getSession();
+	public Object selectOne(String id, Object param) throws Exception {
+		SqlSession session = null;
 		Object result = null;
 
 		try {
+			session = getSession();
 			result = session.selectOne(id, param);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			logger.error("FAIL SelectOne" + e.getMessage());
+			throw new Exception(e);
 		}
 		finally {
 			close(session);
@@ -107,11 +107,12 @@ public class MySqlConnector {
 		return result;
 	}
 	
-	public Object insert(String id, Object param) {
-		SqlSession session = getSession(false);
+	public Object insert(String id, Object param) throws Exception {
+		SqlSession session = null;
 		int result = 0;
 		
 		try {
+			session = getSession(false);
 			result = session.insert(id, param);
 			
 			if(result > 0) {
@@ -121,19 +122,20 @@ public class MySqlConnector {
 				session.rollback();
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.error("FAIL Insert" + e.getMessage());
+			throw new Exception(e);
 		}finally {
 			close(session);
 		}
 		return result;
 	}
 	
-	public int update(String id, Object param) {
-		SqlSession session = this.getSession(false);
+	public int update(String id, Object param) throws Exception {
+		SqlSession session = null;
 		int result = -1;		
 		
 		try {			
+			session = this.getSession(false);
 			result = session.update(id, param);
 			
 			if(result > 0) {
@@ -144,8 +146,8 @@ public class MySqlConnector {
 			}
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			logger.error("FAIL Update" + e.getMessage());
+			throw new Exception(e);
 		}
 		finally {
 			this.close(session);

@@ -12,7 +12,7 @@ public class Configuration {
 	private static Logger logger = Logger.getLogger(Configuration.class);
 	private static Properties properties = new Properties();
 	
-	public static void initialize(String[] args) {
+	public static void initialize(String[] args) throws Exception {
 		try {	
 			//set application properties(context.properties)
 			FileInputStream fis = new FileInputStream(args[0]);
@@ -25,8 +25,8 @@ public class Configuration {
 			logger.info("[Success] Load App Properties File ¡æ " + args[0]);
 			logger.info("[Success] Load Log4j Properties file ¡æ " + LOG4J_CONFIG_FILE_PATH);
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.info("[Exception] App Initialize (Load Proprties File)");
+			throw new Exception(e);
 		}
 	}
 	
@@ -41,14 +41,14 @@ public class Configuration {
 			return false;
 	}
 	
-	public static int getInt(String key) {
+	public static int getInt(String key) throws Exception {
 		try {			
 			return Integer.parseInt(properties.getProperty(key).trim());
 		}catch (Exception e) {
-			e.printStackTrace();
 			logger.info("[Exception] App Properties - Int Parse error");
+			logger.error("Exception : ", e);
+			throw new Exception(e);
 		}
-		return -1;
 	}
 
 }

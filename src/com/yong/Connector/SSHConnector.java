@@ -15,7 +15,7 @@ public class SSHConnector {
 	private Logger logger = Logger.getLogger(this.getClass());
 	private Session session;
 	
-	public SSHConnector() {
+	public SSHConnector() throws Exception {
 		JSch jsch = new JSch();
 
 		try {
@@ -44,12 +44,10 @@ public class SSHConnector {
 			session.setPortForwardingL(SSH_TUNNEL_PORT, Configuration.getString(MsgCode.CONF_SSH_SQL_HOST),
 					SSH_SQL_PORT);
 			logger.info("Port Forward : " + SSH_TUNNEL_PORT + " ¡æ " + SSH_SQL_PORT);
-
 		} catch (Exception e) {
 			logger.info("[Exception] SSH Session Connect");
-			e.printStackTrace();
-		} finally {
-
+			this.disconnect();
+			throw new Exception(e);
 		}
 	}
 	
@@ -64,21 +62,19 @@ public class SSHConnector {
 			logger.debug(port + " is available.");
 			return false;
 		}finally {
-			try { if(socket != null) socket.close(); } catch (Exception e) { logger.debug("Socket Close Error"); e.printStackTrace();}
+			try { if(socket != null) socket.close(); } catch (Exception e) { logger.error("Socket Close Error"); logger.error("Exception : ", e);}
 		}	
 	}
 	
 	public void disconnect() {
 		try {
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-			logger.info("SSH Close Fail!");
-		}finally {
 			if(session != null) {
 				session.disconnect();
 				logger.info("SSH Close Success!");
 			}
+		}catch (Exception e) {
+			logger.info("SSH Close Fail!");
+			logger.error("Exception : ", e);
 		}
 	}
 }
