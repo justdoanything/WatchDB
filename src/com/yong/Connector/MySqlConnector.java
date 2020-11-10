@@ -36,6 +36,7 @@ public class MySqlConnector {
 	public SqlSession getSession() throws Exception {
 		SqlSession session = null;
 		try {
+			logger.debug("Getting Mysql Session ...");
 			session = ssf.openSession();
 			session.getConnection();
 			logger.debug("Session Open");
@@ -49,6 +50,7 @@ public class MySqlConnector {
 	public SqlSession getSession(boolean autoCommit) throws Exception {
 		SqlSession session = null;
 		try {
+			logger.debug("Getting Mysql Session ...");
 			session = ssf.openSession(autoCommit);
 			session.getConnection();
 			logger.debug("Session Open");
