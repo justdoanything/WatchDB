@@ -40,9 +40,10 @@ public class SSHConnector {
 			session.connect();
 
 			logger.info("[Success] SSH Session Connect !");
-
-			session.setPortForwardingL(SSH_TUNNEL_PORT, Configuration.getString(MsgCode.CONF_SSH_SQL_HOST),
-					SSH_SQL_PORT);
+			session.setPortForwardingL(SSH_TUNNEL_PORT, 
+										Configuration.getString(MsgCode.CONF_SSH_SQL_HOST), 
+										SSH_SQL_PORT);
+			Configuration.updateValue("db.port", SSH_TUNNEL_PORT, "Update : db.port");
 			logger.info("Port Forward : " + SSH_TUNNEL_PORT + " ¡æ " + SSH_SQL_PORT);
 		} catch (Exception e) {
 			logger.info("[Exception] SSH Session Connect");

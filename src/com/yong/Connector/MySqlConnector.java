@@ -24,9 +24,14 @@ public class MySqlConnector {
 			logger.debug("[Success] Load myBatis Properties file ¡æ " + MYBATIS_CONFIG_FILE_PATH);
 			
 			InputStream iss = new FileInputStream(file);
+			
+
 			ssf = new SqlSessionFactoryBuilder().build(iss);
-			logger.debug("SqlSessionFactory build Success");
-			logger.info("[Success] Mysql Connect Success!");
+			logger.info("[Success] Mysql Connect Success! ¡æ " + 
+						Configuration.getString("db.type") + "://" + 
+						Configuration.getString("db.host") + ":" + 
+						Configuration.getString("db.port") + "/" + 
+						Configuration.getString("db.schema"));
 		}catch (Exception e) {
 			logger.info("[Exception] Mysql Connect Fail!");
 			throw new Exception(e);
@@ -36,10 +41,10 @@ public class MySqlConnector {
 	public SqlSession getSession() throws Exception {
 		SqlSession session = null;
 		try {
-			logger.debug("Getting Mysql Session ...");
+			logger.info("Getting Mysql Session ...");
 			session = ssf.openSession();
 			session.getConnection();
-			logger.debug("Session Open");
+			logger.info("Session Open");
 		}catch (Exception e) {
 			logger.error("FAIL Session Open" + e.getMessage());
 			throw new Exception(e);
@@ -50,9 +55,10 @@ public class MySqlConnector {
 	public SqlSession getSession(boolean autoCommit) throws Exception {
 		SqlSession session = null;
 		try {
+			logger.info("Getting Mysql Session ...");
 			session = ssf.openSession(autoCommit);
 			session.getConnection();
-			logger.debug("Session Open");
+			logger.info("Session Open");
 		}catch (Exception e) {
 			logger.error("FAIL Session Open" + e.getMessage());
 			throw new Exception(e);
@@ -79,7 +85,9 @@ public class MySqlConnector {
 		Object reslut = null;
 		try {
 			session = getSession();
+			logger.info("Start SelectList");
 			reslut = session.selectList(id, param);
+			logger.info("End SelectList");
 		}catch (Exception e) {
 			logger.error("FAIL SelectList" + e.getMessage());
 			throw new Exception(e);
@@ -95,7 +103,9 @@ public class MySqlConnector {
 
 		try {
 			session = getSession();
+			logger.info("Start SelectOne");
 			result = session.selectOne(id, param);
+			logger.info("End SelectOne");
 		}
 		catch(Exception e) {
 			logger.error("FAIL SelectOne" + e.getMessage());
@@ -114,7 +124,9 @@ public class MySqlConnector {
 		
 		try {
 			session = getSession(false);
+			logger.info("Start Insert");
 			result = session.insert(id, param);
+			logger.info("End Insert");
 			
 			if(result > 0) {
 				session.commit();
@@ -137,7 +149,9 @@ public class MySqlConnector {
 		
 		try {			
 			session = this.getSession(false);
+			logger.info("Start Update");
 			result = session.update(id, param);
+			logger.info("End Update");
 			
 			if(result > 0) {
 				session.commit();

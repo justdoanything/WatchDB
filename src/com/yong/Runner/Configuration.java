@@ -1,6 +1,7 @@
 package com.yong.Runner;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -11,13 +12,14 @@ import com.yong.Common.MsgCode;
 public class Configuration {
 	private static Logger logger = Logger.getLogger(Configuration.class);
 	private static Properties properties = new Properties();
+	private static String propPath = "";
 	
 	public static void initialize(String[] args) throws Exception {
 		try {	
 			//set application properties(context.properties)
 			FileInputStream fis = new FileInputStream(args[0]);
 			properties.load(fis);
-			
+			propPath = args[0];
 			//set Log4j properties
 			String LOG4J_CONFIG_FILE_PATH = Configuration.getString(MsgCode.CONF_PATH_LOG4J); 
 			PropertyConfigurator.configure(LOG4J_CONFIG_FILE_PATH);
@@ -46,6 +48,28 @@ public class Configuration {
 			return Integer.parseInt(properties.getProperty(key).trim());
 		}catch (Exception e) {
 			logger.info("[Exception] App Properties - Int Parse error");
+			logger.error("Exception : ", e);
+			throw new Exception(e);
+		}
+	}
+	
+	public static void updateValue(String key, String value, String comment) throws Exception {
+		try {
+			properties.setProperty(key, value);
+			properties.store(new FileOutputStream(propPath), comment);
+		}catch (Exception e) {
+			logger.info("[Exception] App Properties - update Properties");
+			logger.error("Exception : ", e);
+			throw new Exception(e);
+		}
+	}
+	
+	public static void updateValue(String key, int value, String comment) throws Exception {
+		try {
+			properties.setProperty(key, ""+value);
+			properties.store(new FileOutputStream(propPath), comment);
+		}catch (Exception e) {
+			logger.info("[Exception] App Properties - update Properties");
 			logger.error("Exception : ", e);
 			throw new Exception(e);
 		}
