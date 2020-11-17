@@ -43,8 +43,11 @@ public class SSHConnector {
 			session.setPortForwardingL(SSH_TUNNEL_PORT, 
 										Configuration.getString(MsgCode.CONF_SSH_SQL_HOST), 
 										SSH_SQL_PORT);
-			Configuration.updateValue("db.port", SSH_TUNNEL_PORT, "Update : db.port");
-			logger.info("Port Forward : " + SSH_TUNNEL_PORT + " ¡æ " + SSH_SQL_PORT);
+			
+			//Connecting SSH Port to Recently Successful Port
+			Configuration.updateValue("SSH.TUNNEL_START_PORT", SSH_TUNNEL_PORT, "Update : db.port, SSH.TUNNEL_START_PORT");
+			Configuration.updateValue("db.port", SSH_TUNNEL_PORT, "Update : db.port, SSH.TUNNEL_START_PORT");
+			logger.info("Port Forward (Local ¡æ SSH Host) : " + SSH_TUNNEL_PORT + " ¡æ " + SSH_SQL_PORT);
 		} catch (Exception e) {
 			logger.info("[Exception] SSH Session Connect");
 			this.disconnect();
