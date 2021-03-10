@@ -3,6 +3,7 @@ package com.yong.Common;
 public class MsgCode {
 	public static final String CONF_PATH_LOG4J = "CONF.PATH_LOG4J";
 	public static final String CONF_PATH_MYBATIS = "CONF.PATH_MYBATIS";
+	public static final String CONF_EXE_INTERVAL = "CONF.EXE_INTERVAL";
 	
 	public static final String CONF_SSH_USE = "SSH.USE";
 	public static final String CONF_SSH_USER = "SSH.USER";
