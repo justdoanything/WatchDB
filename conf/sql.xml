@@ -8,8 +8,8 @@
     <select id="TEST" resultType="LinkedHashMap" parameterType="map">
     	<![CDATA[
 			select  *
-			from	sales_order a
-			where	increment_id = 38000001664
+			from	table_name a
+			limit 1;
 		]]>
      </select>
     	
